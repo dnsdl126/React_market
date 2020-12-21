@@ -4,6 +4,20 @@ import { Typography, Button, Form, Input } from 'antd';
 
 const { TextArea } = Input;
 
+// {Continents.map()}
+// 이라는 메소드로 한개씩 불러올수가 있다
+const Continents = [
+    { key: 1, value: "Africa" },
+    { key: 2, value: "Europe" },
+    { key: 3, value: "Asia" },
+    { key: 4, value: "North America" },
+    { key: 5, value: "South America" },
+    { key: 6, value: "Australia" },
+    { key: 7, value: "Antarctica" }
+]
+
+
+
 function UploadProductPage() {
     const [Title, setTitle] = useState("")
     const [Description, setDescription] = useState("")
@@ -22,6 +36,11 @@ function UploadProductPage() {
 
     const priceChangeHandler = (event) => {
         setPrice(event.currentTarget.value)
+    }
+
+    const continentChangeHandler = (evnet) => {
+        setContinent(evnet.currentTarget.value)
+
     }
 
     return (
@@ -49,8 +68,11 @@ function UploadProductPage() {
                 <Input type="number" onChange={priceChangeHandler} value={Price} />
                 <br />
                 <br />
-                <select>
-                    <option></option>
+                <select onChange={continentChangeHandler} value={Continent}>
+                    {Continents.map(item => (
+                        <option option key={item.key} value={item.key} > { item.value}</option>
+                    ))}
+
                 </select>
                 <br />
                 <br />
@@ -60,7 +82,7 @@ function UploadProductPage() {
 
 
             </Form>
-        </div>
+        </div >
     )
 }
 
