@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Typography, Button, Form, Input } from 'antd';
-
+import FileUpload from '../../utils/FileUpload'
 
 const { TextArea } = Input;
 
@@ -22,9 +22,10 @@ function UploadProductPage() {
     const [Title, setTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Price, setPrice] = useState(0)
-    const [Continent, setContinent] = useState(1)
+    const [ContinentValue, setContinentValue] = useState(1)
 
     const [Images, setImages] = useState([])
+
 
     const titleChnageHandler = (event) => {
         setTitle(event.currentTarget.value)
@@ -38,8 +39,8 @@ function UploadProductPage() {
         setPrice(event.currentTarget.value)
     }
 
-    const continentChangeHandler = (evnet) => {
-        setContinent(evnet.currentTarget.value)
+    const onContinentsSelectChange = (evnet) => {
+        setContinentValue(evnet.currentTarget.value)
 
     }
 
@@ -48,12 +49,10 @@ function UploadProductPage() {
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <h2 >여행 상품 업로드</h2>
             </div>
-
-
-
             <Form>
-
+                {/* 업로드 하는 창은 다른곳에서도 사용할수 있기 때문에 component를 만들어 이용  */}
                 {/* DropZone */}
+                <FileUpload />
                 <br />
                 <br />
                 <label>이름</label>
@@ -68,11 +67,10 @@ function UploadProductPage() {
                 <Input type="number" onChange={priceChangeHandler} value={Price} />
                 <br />
                 <br />
-                <select onChange={continentChangeHandler} value={Continent}>
+                <select onChange={onContinentsSelectChange} value={ContinentValue}>
                     {Continents.map(item => (
-                        <option option key={item.key} value={item.key} > { item.value}</option>
+                        <option key={item.key} value={item.key}>{item.value} </option>
                     ))}
-
                 </select>
                 <br />
                 <br />
