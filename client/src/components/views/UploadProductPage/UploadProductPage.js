@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Typography, Button, Form, Input } from 'antd';
 import FileUpload from '../../utils/FileUpload'
+import Axios from 'axios';
+
 
 const { TextArea } = Input;
 
@@ -18,7 +20,7 @@ const Continents = [
 
 
 
-function UploadProductPage() {
+function UploadProductPage(props) {
     const [Title, setTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Price, setPrice] = useState(0)
@@ -56,12 +58,47 @@ function UploadProductPage() {
         // FileUpload 로이동 
     }
 
+    const submitHandler = (event) => {
+        event.preventDefault();
+
+        //유효성 검사
+        if (!Title || !Description || !Price || !ContinentValue || !Images) {
+            return alert("모든 값을 넣어주셔야 합니다.")
+        }
+
+        // 서버에 채운 값들ㅇ르 request로 보낸다.
+        // post 여서 body 피룡
+        const body = {
+            //로그인 된 사람의 iD
+            // hoc 파일의 auth.js
+            //  <SpecificComponent {...props} user={user} />
+            // user의 모든 정보를 담아뒀기 때문에
+            // props를 이용해 유저정보를 가지고 온다 
+            // uploadProductPage를 자식 component로 만든다 
+            writer: props.user.userData._id,
+            title: Title,
+            discription: Description,
+            pricd: Price,
+            images: Images,
+            Continents: ContinentValue
+        }
+        Axios.post("/api/product", body)
+            .then(response => {
+                if (response.data.success) {
+                    alert('상품 업로드에 성공 했습니다.')
+                    props.history.push('/')
+                } else {
+                    alert('상품 업로드에 실패 했습니다.')
+                }
+            })
+    }
+
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <h2 >여행 상품 업로드</h2>
             </div>
-            <Form>
+            <Form onSubmit={submitHandler}>
                 {/* 업로드 하는 창은 다른곳에서도 사용할수 있기 때문에 component를 만들어 이용  */}
                 {/* DropZone */}
                 {/* FileUpload.js는 UploadProductPage.js의 자식 component이므로 */}
@@ -92,9 +129,9 @@ function UploadProductPage() {
                 </select>
                 <br />
                 <br />
-                <Button>
+                <button type="submit">
                     확인
-                </Button>
+                </button>
 
 
             </Form>
