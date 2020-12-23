@@ -44,6 +44,18 @@ function UploadProductPage() {
 
     }
 
+    const updateImages = (newImages) => {
+
+        //  FileUpload에 있는 새로운 이미지 정보인 const [Images, setImages] = useState([])
+        //  const [Images, setImages] 를 newImages 라는 이름의 파라메터로 받는다
+
+        // 받아온 파라메터를 상단에  const [Images, setImages] = useState([]) 에 넣어준다        
+        setImages(newImages)
+
+        // refreshFunction (pros)을  FileUpload component에 전달 해준다 
+        // FileUpload 로이동 
+    }
+
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -56,7 +68,9 @@ function UploadProductPage() {
                 {/* 부모 component에서 자식 copmonent의 이미지 정보를 가지고 있어야 한다 */}
                 {/* FileUpload에서 확인 버튼을 누르면 모든 정보를 UploadProductPage coponent에서 한번에 backend로 보내줘야 하기 때문에  */}
                 {/* 부모 component로 올려줘야 한다  */}
-                <FileUpload />
+                {/* 1. refreshFunction={updateImages}  */}
+                {/* 2.  const updateImages = (newImages) =>  */}
+                <FileUpload refreshFunction={updateImages} />
                 <br />
                 <br />
                 <label>이름</label>

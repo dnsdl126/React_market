@@ -8,6 +8,7 @@ import axios from 'axios';
 
 function FileUpload(props) {
 
+    //이미지를 업로드하면 imagepath가 들어간다 
     const [Images, setImages] = useState([])
 
 
@@ -25,7 +26,10 @@ function FileUpload(props) {
         axios.post('/api/product/uploadImage', formData, config)
             .then(response => {
                 if (response.data.success) {
+                    // 파일업로드: image state이 변경되는 부분 
                     setImages([...Images, response.data.image])
+                    props.refreshFunction([...Images, response.data.image])
+
                 } else {
                     alert('Failed to save the Image in Server')
                 }
@@ -44,7 +48,9 @@ function FileUpload(props) {
         // newImages라는 array 에서 currentIndex(인덱스 번호) 로 시작해서 1개를 삭제
         newImages.splice(currentIndex, 1)
 
+        // 파일삭제 : image state이 변경되는 부분 
         setImages(newImages);
+        props.refreshFunction(newImages)
 
 
     }
