@@ -26,8 +26,6 @@ function FileUpload(props) {
             .then(response => {
                 if (response.data.success) {
                     setImages([...Images, response.data.image])
-
-
                 } else {
                     alert('Failed to save the Image in Server')
                 }
@@ -35,7 +33,24 @@ function FileUpload(props) {
 
     }
 
+    const deleteHandler = (image) => {
+        // 이미지를 삭제하려면 
+        // 각 이미지에 index 값을 부여하여
+        // 삭제하도록 처리
+        const currentIndex = Images.indexOf(image)
+        //console.log('currneIndex', currentIndex)
+
+        let newImages = [...Images]
+        // newImages라는 array 에서 currentIndex(인덱스 번호) 로 시작해서 1개를 삭제
+        newImages.splice(currentIndex, 1)
+
+        setImages(newImages);
+
+
+    }
+
     return (
+        // dropzon npm 검색하면 사용법 나옴 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Dropzone onDrop={dropHandler}>
                 {({ getRootProps, getInputProps }) => (
@@ -52,10 +67,11 @@ function FileUpload(props) {
                     </section>
                 )}
             </Dropzone>
+            {/* {올린 이미지를 표출해 주는 부분 } */}
             <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
 
                 {Images.map((image, index) => (
-                    <div key={index}>
+                    <div onClick={() => deleteHandler(image)} key={index}>
                         <img style={{ minWidth: '300px', width: '300px', height: '240px' }}
                             src={`http://localhost:5000/${image}`}
                         />

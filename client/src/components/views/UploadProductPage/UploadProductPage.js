@@ -52,6 +52,10 @@ function UploadProductPage() {
             <Form>
                 {/* 업로드 하는 창은 다른곳에서도 사용할수 있기 때문에 component를 만들어 이용  */}
                 {/* DropZone */}
+                {/* FileUpload.js는 UploadProductPage.js의 자식 component이므로 */}
+                {/* 부모 component에서 자식 copmonent의 이미지 정보를 가지고 있어야 한다 */}
+                {/* FileUpload에서 확인 버튼을 누르면 모든 정보를 UploadProductPage coponent에서 한번에 backend로 보내줘야 하기 때문에  */}
+                {/* 부모 component로 올려줘야 한다  */}
                 <FileUpload />
                 <br />
                 <br />
