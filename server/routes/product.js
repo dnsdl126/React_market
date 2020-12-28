@@ -52,5 +52,20 @@ router.post('/', (req, res) => {
 
 });
 
+router.post('/products', (req, res) => {
+
+    // product collection에 들어 있는 모든 상품 정보를 가져오기
+    // populate : 데이터베이스에 상품을 누가 등록했는지에 대한 정보가 다필요하기때문에 사용
+
+    Product.find()
+        .populate("writer")
+        .exec((err, productInfo) => {
+            if (err) return res.status(400).json({ success: false, err })
+            return res.status(200).json({ success: true, productInfo })
+        })
+
+
+});
+
 
 module.exports = router;
