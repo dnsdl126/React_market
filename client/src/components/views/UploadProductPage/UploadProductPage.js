@@ -78,7 +78,7 @@ function UploadProductPage(props) {
             writer: props.user.userData._id,
             title: Title,
             discription: Description,
-            pricd: Price,
+            price: Price,
             images: Images,
             Continents: ContinentValue
         }
